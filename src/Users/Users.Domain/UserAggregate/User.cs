@@ -21,7 +21,7 @@ public class User : AggregateRoot, ITrackable
     public string LastName { get; private set; }
     public DateTime BornAt { get; private set; }
 
-    public ResultStatus Edit(string firstName,
+    public EditResult Edit(string firstName,
         string lastName,
         DateTime bornAt)
     {
@@ -30,6 +30,6 @@ public class User : AggregateRoot, ITrackable
         BornAt = bornAt;
         EditedAt = DateTime.UtcNow;
 
-        return ResultStatus.Success;
+        return EditResult.Success(this);
     }
 }

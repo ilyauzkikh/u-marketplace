@@ -1,11 +1,12 @@
 ﻿namespace Shared.Results;
 
-public abstract class Result
+public abstract class Result<T> where T: class
 {
-    protected Result(ResultStatus status)
+    protected Result(bool isSuccess)
     {
-        Status = status;
+        IsSuccess = isSuccess;
     }
     
-    public ResultStatus Status { get; }
+    public bool IsSuccess { get; private set; }
+    public T Entity { get; protected set; }
 }
