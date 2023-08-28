@@ -1,7 +1,9 @@
-﻿namespace Products.Domain.ProductsAggregate;
+﻿using Products.Domain.Entities;
 
-public class Category
+namespace Products.Domain.ProductsAggregate;
+
+public class Category : ValueObject
 {
-    public string Title { get; set; }
-    public string Description { get; set; }
+    public required string Title { get; set; }
+    public required string Description { get; set; }
 }

@@ -1,4 +1,5 @@
 ﻿using Products.Domain.Entities;
+using Products.Domain.PriceAggregate;
 
 namespace Products.Domain.ProductsAggregate;
 
