@@ -19,4 +19,8 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Products.Presentation\Products.Presentation.csproj" />
+    </ItemGroup>
+
 </Project>

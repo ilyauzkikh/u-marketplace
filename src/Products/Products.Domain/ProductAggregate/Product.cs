@@ -1,27 +1,31 @@
-﻿using Products.Domain.Entities;
+﻿using Products.Domain.CustomerAggregate;
+using Products.Domain.Entities;
 using Products.Domain.PriceAggregate;
 
-namespace Products.Domain.ProductsAggregate;
+namespace Products.Domain.ProductAggregate;
 
-public class Product : TrackableEntity
+public class Product : TrackableEntity, IAggregateRoot
 {
     protected Product() {}
 
     public Product(string title,
         string description,
         Category category,
-        Price price)
+        Price price,
+        Customer owner) : base(owner.Id)
     {
         Title = title;
         Description = description;
         Category = category;
         Price = price;
+        Owner = owner;
     }
 
     public string Title { get; private set; }
     public string Description { get; private set; }
     public Category Category { get; private set; }
     public Price Price { get; private set; }
+    public Customer Owner { get; private set; }
 
     public void ChangeTitle(string newTitle)
     {
@@ -29,6 +33,7 @@ public class Product : TrackableEntity
             throw new ArgumentNullException(nameof(newTitle));
 
         Title = newTitle;
+        UpdateEditedStatus();
     }
 
     public void ChangeDescription(string newDescription)
@@ -37,5 +42,6 @@ public class Product : TrackableEntity
             throw new ArgumentNullException(nameof(newDescription));
 
         Description = newDescription;
+        UpdateEditedStatus();
     }
 }
