@@ -2,7 +2,7 @@
 
 namespace Products.Domain.CustomerAggregate;
 
-public class Customer : TrackableEntity
+public class Customer : Entity
 {
     protected Customer() { }
 

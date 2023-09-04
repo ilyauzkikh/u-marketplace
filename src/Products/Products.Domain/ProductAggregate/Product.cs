@@ -4,7 +4,7 @@ using Products.Domain.PriceAggregate;
 
 namespace Products.Domain.ProductAggregate;
 
-public class Product : TrackableEntity, IAggregateRoot
+public class Product : Entity, IAggregateRoot
 {
     protected Product() {}
 
@@ -12,7 +12,7 @@ public class Product : TrackableEntity, IAggregateRoot
         string description,
         Category category,
         Price price,
-        Customer owner) : base(owner.Id)
+        Customer owner)
     {
         Title = title;
         Description = description;
@@ -35,7 +35,6 @@ public class Product : TrackableEntity, IAggregateRoot
             throw new ArgumentNullException(nameof(newTitle));
 
         Title = newTitle;
-        UpdateEditedStatus();
     }
 
     public void ChangeDescription(string newDescription)
@@ -44,12 +43,10 @@ public class Product : TrackableEntity, IAggregateRoot
             throw new ArgumentNullException(nameof(newDescription));
 
         Description = newDescription;
-        UpdateEditedStatus();
     }
 
     public void ChangePriceAmount(decimal newAmount)
     {
         Price.ChangeAmount(newAmount);
-        UpdateEditedStatus();
     }
 }
