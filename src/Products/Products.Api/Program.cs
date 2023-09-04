@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Products.Infrastructure.Context;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -13,6 +16,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var testConnectionString = builder.Configuration["Products:ConnectionString"];
+builder.Services.AddDbContext<ProductsContext>(x => x.UseSqlServer(testConnectionString));
 
 var app = builder.Build();
 

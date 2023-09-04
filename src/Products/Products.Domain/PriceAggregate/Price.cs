@@ -22,14 +22,14 @@ public class Price : Entity
         Amount = newAmount;
     }
 
-    public Price ConvertTo(CurrencyType toCurrency)
+    public Price ConvertTo(Currency toCurrency)
     {
         var amount = Amount * BaseCurrency.ExchangeRates
-            .FirstOrDefault(x => x.First == BaseCurrency.Type && x.Second == toCurrency)!
+            .FirstOrDefault(x => x.First == BaseCurrency && x.Second == toCurrency)!
             .FirstToSecond;
 
         return new Price(
-            new Currency(toCurrency, BaseCurrency.ExchangeRates),
+            new Currency(toCurrency.Type, BaseCurrency.ExchangeRates),
             amount);
     }
 }
