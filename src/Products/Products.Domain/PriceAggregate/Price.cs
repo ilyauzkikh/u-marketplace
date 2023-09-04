@@ -4,20 +4,32 @@ namespace Products.Domain.PriceAggregate;
 
 public class Price : Entity
 {
-    public Price(Currency currency, decimal amount)
+    public Price(Currency currency, decimal? amount)
     {
-        Currency = currency;
+        if (amount < 0)
+            throw new ArgumentOutOfRangeException(nameof(amount));
+
+        BaseCurrency = currency;
         Amount = amount;
     }
 
-    public Currency Currency { get; set; }
-    public decimal Amount { get; set; }
+    public Currency BaseCurrency { get; private set; }
+    public decimal? Amount { get; private set; }
 
-    public void ConvertTo(CurrencyType newCurrencyType)
+    public void ChangeAmount(decimal newAmount)
     {
-        Currency.Type = newCurrencyType;
-        Amount *= Currency.ExchangeRates
-            .FirstOrDefault(x => x.First == Currency.Type && x.Second == newCurrencyType)!
+        if (newAmount < 0) throw new ArgumentOutOfRangeException(nameof (newAmount));
+        Amount = newAmount;
+    }
+
+    public Price ConvertTo(CurrencyType toCurrency)
+    {
+        var amount = Amount * BaseCurrency.ExchangeRates
+            .FirstOrDefault(x => x.First == BaseCurrency.Type && x.Second == toCurrency)!
             .FirstToSecond;
+
+        return new Price(
+            new Currency(toCurrency, BaseCurrency.ExchangeRates),
+            amount);
     }
 }

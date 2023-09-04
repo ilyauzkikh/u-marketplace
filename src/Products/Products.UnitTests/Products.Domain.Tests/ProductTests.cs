@@ -1,40 +1,18 @@
 ﻿using Products.Domain.CustomerAggregate;
 using Products.Domain.PriceAggregate;
-using Products.Domain.ProductAggregate;
 
 namespace Products.UnitTests.Products.Domain.Tests;
 
 public class ProductTests
-{
-    private Customer _testCustomer => new Customer("Ilya", "Uzkikh", "+48111222333");
-    private Currency _testCurrency => new Currency(CurrencyType.USD, new ExchangeRate[]
-        {
-            new ExchangeRate(CurrencyType.USD, CurrencyType.PLN, 4, 1 / 4)
-        });
-
-    private static Product CreateTestProduct(Currency currency, Customer owner)
-    {
-        string title = "Test Product";
-        string description = "Test Description";
-        var category = new Category { Title = "Test Category Title", Description = "Test Category Description" };
-        var price = new Price(currency, 1000);
-
-        return new Product(title,
-            description,
-            category,
-            price,
-            owner);
-    }
-
+{    
     [Fact]
     public void Product_SuccessfullyCreates()
     {
         //Arrange
-        Currency category = _testCurrency;
-        Customer owner = _testCustomer;
+        Customer owner = ProductFactory.TestCustomer;
 
         //Act
-        var product = CreateTestProduct(category, owner);
+        var product = ProductFactory.Create(owner, 1000);
 
         //Assert
         Assert.NotNull(product);
@@ -46,7 +24,7 @@ public class ProductTests
     public void Product_ChangeTitle_ThrowsExceptionIfTitleNullOrEmpty(string title)
     {
         //Arrange
-        var product = CreateTestProduct(_testCurrency, _testCustomer);
+        var product = ProductFactory.Create(ProductFactory.TestCustomer, 1000);
 
         //Act
         try
@@ -58,5 +36,100 @@ public class ProductTests
             //Assert
             Assert.Equal(typeof(ArgumentNullException), e.GetType());
         }             
+    }
+
+    [Theory]
+    [InlineData("TestTitleChanged")]
+    public void Product_ChangesTitle_Successfully_IfStringHasValue(string title)
+    {
+        //Arrange
+        var product = ProductFactory.Create(ProductFactory.TestCustomer, 1000);
+
+        //Act
+        product.ChangeTitle(title);
+
+        //Arrage
+        Assert.Equal(title, product.Title);
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    public void Product_ChangeDesc_ThrowsExceptionIfTitleNullOrEmpty(string description)
+    {
+        //Arrange
+        var product = ProductFactory.Create(ProductFactory.TestCustomer, 1000);
+
+        //Act
+        try
+        {
+            product.ChangeDescription(description);
+        }
+        catch (Exception e)
+        {
+            //Assert
+            Assert.Equal(typeof(ArgumentNullException), e.GetType());
+        }
+    }
+
+    [Theory]
+    [InlineData("TestDescriptionChanged")]
+    public void Product_ChangesDesc_Successfully_IfStringHasValue(string description)
+    {
+        //Arrange
+        var product = ProductFactory.Create(ProductFactory.TestCustomer, 1000);
+
+        //Act
+        product.ChangeTitle(description);
+
+        //Assert
+        Assert.Equal(description, product.Title);
+    }
+
+    [Theory]
+    [InlineData(100)]
+    [InlineData(0.0001)]
+    public void ProductPrice_IsValid_IfAmountIsGreaterThenZero(decimal amount)
+    {
+        //Arrange, Act
+        var product = ProductFactory.Create(ProductFactory.TestCustomer, amount);
+
+        //Assert
+        Assert.NotNull(product);
+    }
+
+    [Theory]
+    [InlineData(-5)]
+    public void ProductPrice_ThrowsException_IfAmountIsLessThenZero(decimal amount)
+    {
+        try
+        {
+            //Arrange, Act
+            var product = ProductFactory.Create(ProductFactory.TestCustomer, amount);           
+        }
+        catch (Exception e)
+        {
+            //Assert
+            Assert.Equal(typeof(ArgumentOutOfRangeException), e.GetType());
+        }
+    }
+
+    [Theory]
+    [InlineData(-5)]
+    public void Product_ChangePriceAmount_ThrowsExceptions_IfAmountIsLessThenZero(decimal amount)
+    {
+        //Arrange
+        var product = ProductFactory.Create(ProductFactory.TestCustomer, 1000);
+
+        try
+        {
+            //Act
+            product.ChangePriceAmount(amount);
+        }
+        catch (Exception e)
+        {
+            //Assert
+            Assert.Equal(typeof (ArgumentOutOfRangeException), e.GetType());
+        }
     }
 }

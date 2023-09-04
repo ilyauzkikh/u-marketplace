@@ -27,6 +27,8 @@ public class Product : TrackableEntity, IAggregateRoot
     public Price Price { get; private set; }
     public Customer Owner { get; private set; }
 
+    public bool IsGiveAway => Price.Amount == 0;
+
     public void ChangeTitle(string newTitle)
     {
         if (string.IsNullOrEmpty(newTitle))
@@ -42,6 +44,12 @@ public class Product : TrackableEntity, IAggregateRoot
             throw new ArgumentNullException(nameof(newDescription));
 
         Description = newDescription;
+        UpdateEditedStatus();
+    }
+
+    public void ChangePriceAmount(decimal newAmount)
+    {
+        Price.ChangeAmount(newAmount);
         UpdateEditedStatus();
     }
 }

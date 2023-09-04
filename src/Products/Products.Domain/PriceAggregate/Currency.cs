@@ -2,7 +2,7 @@
 
 namespace Products.Domain.PriceAggregate;
 
-public class Currency : TrackableEntity
+public class Currency : ValueObject
 {
     public Currency(CurrencyType type,
         IEnumerable<ExchangeRate> exchangeRates)
@@ -13,5 +13,4 @@ public class Currency : TrackableEntity
 
     public CurrencyType Type { get; set; }
     public IEnumerable<ExchangeRate> ExchangeRates { get; private set; }
-
 }
