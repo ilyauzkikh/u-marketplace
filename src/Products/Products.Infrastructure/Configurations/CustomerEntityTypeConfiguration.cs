@@ -8,8 +8,7 @@ internal class CustomerEntityTypeConfiguration : IEntityTypeConfiguration<Custom
 {
     public void Configure(EntityTypeBuilder<Customer> builder)
     {
-        builder.HasKey(x => x.Id)
-            .HasName("id");
+        builder.Property(x => x.Id).HasDefaultValueSql("NEWID()");
 
         builder.Property(x => x.FirstName)
             .IsRequired()

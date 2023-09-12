@@ -8,8 +8,7 @@ internal class ExchangeRateEntityTypeConfiguration : IEntityTypeConfiguration<Ex
 {
     public void Configure(EntityTypeBuilder<ExchangeRate> builder)
     {
-        builder.HasKey(x => x.Id)
-            .HasName("id");
+        builder.Property(x => x.Id).HasDefaultValueSql("NEWID()");
 
         builder.Property(x => x.First)
             .HasColumnName("first_currency")
@@ -26,17 +25,5 @@ internal class ExchangeRateEntityTypeConfiguration : IEntityTypeConfiguration<Ex
         builder.Property(x => x.SecondToFirst)
             .HasColumnName("second_to_frist_rate")
             .IsRequired();
-
-        builder.OwnsOne(x => x.First, c =>
-        {
-            c.Property(y => y.Id);
-            c.WithOwner();
-        });
-
-        builder.OwnsOne(x => x.Second, c =>
-        {
-            c.Property(y => y.Id);
-            c.WithOwner();
-        });
     }
 }

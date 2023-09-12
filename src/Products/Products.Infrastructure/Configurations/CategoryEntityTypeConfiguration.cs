@@ -11,7 +11,7 @@ internal class CategoryEntityTypeConfiguration : IEntityTypeConfiguration<Catego
     {
         builder.ToTable("categories", ProductsContext.DEFAULT_SCHEMA);
 
-        builder.HasKey(x => x.Id);
+        builder.Property(x => x.Id).HasDefaultValueSql("NEWID()");
 
         builder.Property(x => x.Id)
             .HasColumnName("id");

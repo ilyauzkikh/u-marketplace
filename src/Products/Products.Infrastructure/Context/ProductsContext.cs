@@ -23,12 +23,11 @@ public class ProductsContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.ApplyConfiguration(new ProductEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new CategoryEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new CustomerEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new ExchangeRateEntityTypeConfiguration());
-        modelBuilder.ApplyConfiguration(new CurrencyEntityTypeConfiguration());
-        modelBuilder.ApplyConfiguration(new PriceEntityTypeConfiguration());
-        modelBuilder.ApplyConfiguration(new ProductEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new PriceEntityTypeConfiguration());      
     }
 }
 
@@ -37,7 +36,7 @@ public class ProductsContextDesignFactory : IDesignTimeDbContextFactory<Products
     public ProductsContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<ProductsContext>()
-            .UseSqlServer(args[0]);
+            .UseNpgsql(args[0]);
 
         return new ProductsContext(optionsBuilder.Options);
     }

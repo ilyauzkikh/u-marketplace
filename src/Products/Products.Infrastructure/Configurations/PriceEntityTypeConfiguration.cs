@@ -8,21 +8,14 @@ internal class PriceEntityTypeConfiguration : IEntityTypeConfiguration<Price>
 {
     public void Configure(EntityTypeBuilder<Price> builder)
     {
-        builder.HasKey(x => x.Id)
-            .HasName("id");
+        builder.Property(x => x.Id).HasDefaultValueSql("NEWID()");
 
         builder.Property(x => x.Amount)
             .HasColumnName("amount")
             .IsRequired();
 
-        builder.Property(x => x.BaseCurrency)
-            .HasColumnName("currency")
-            .IsRequired();
+        builder.OwnsOne(x => x.BaseCurrency);
 
-        builder.OwnsOne(x => x.BaseCurrency, c =>
-        {
-            c.Property(y => y.Id);
-            c.WithOwner();
-        });
+        //builder.OwnsMany(x => x.BaseCurrency.ExchangeRates);
     }
 }

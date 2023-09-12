@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Products.Domain.PriceAggregate;
+using Products.Infrastructure.Context;
+using System.Reflection.Emit;
 
 namespace Products.Infrastructure.Configurations;
 
@@ -8,16 +10,15 @@ internal class CurrencyEntityTypeConfiguration : IEntityTypeConfiguration<Curren
 {
     public void Configure(EntityTypeBuilder<Currency> builder)
     {
-        builder.HasKey(x => x.Id)
-            .HasName("id");
+        builder.ToTable("currencies", ProductsContext.DEFAULT_SCHEMA);
+
+        builder.Property(x => x.Id).HasDefaultValueSql("NEWID()");
+
+        builder.Property(x => x.Id)
+            .HasColumnName("id");
 
         builder.Property(x => x.Type)
-            .IsRequired();
-
-        builder.OwnsMany(x => x.ExchangeRates, rates =>
-        {
-            rates.Property(x => x.First);
-            rates.WithOwner();
-        });
+            .HasColumnName("type")
+        .IsRequired(true);
     }
 }
