@@ -13,10 +13,16 @@ public class ExchangeRate : Entity
         Second = second;
         FirstToSecond = firstToSecondRate;
         SecondToFirst = secondToFirstRate;
+
+        Currencies = new HashSet<Currency>();
     }
+
+    protected ExchangeRate() { }
 
     public CurrencyType First { get; private set; }
     public CurrencyType Second { get; private set; }
     public decimal FirstToSecond { get; private set; }
     public decimal SecondToFirst { get; private set; }
+
+    public virtual IEnumerable<Currency> Currencies { get; set; }
 }
