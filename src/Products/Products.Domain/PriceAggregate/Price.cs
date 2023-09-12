@@ -13,6 +13,8 @@ public class Price : Entity
         Amount = amount;
     }
 
+    protected Price() { }
+
     public Currency BaseCurrency { get; private set; }
     public decimal? Amount { get; private set; }
 
@@ -25,7 +27,7 @@ public class Price : Entity
     public Price ConvertTo(Currency toCurrency)
     {
         var amount = Amount * BaseCurrency.ExchangeRates
-            .FirstOrDefault(x => x.First == BaseCurrency && x.Second == toCurrency)!
+            .FirstOrDefault(x => x.First == BaseCurrency.Type && x.Second == toCurrency.Type)!
             .FirstToSecond;
 
         return new Price(

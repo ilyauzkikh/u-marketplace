@@ -2,7 +2,7 @@
 
 namespace Products.Domain.ProductAggregate;
 
-public class Category : ValueObject
+public class Category : Entity
 {
     protected Category() { }
 
