@@ -1,5 +1,6 @@
 ﻿using Products.Domain.CustomerAggregate;
 using Products.Domain.PriceAggregate;
+using FluentAssertions;
 
 namespace Products.UnitTests.Products.Domain.Tests;
 
@@ -15,7 +16,7 @@ public class ProductTests
         var product = ProductFactory.Create(owner, 1000);
 
         //Assert
-        Assert.NotNull(product);
+        product.Should().NotBeNull();
     }
 
     [Theory]
@@ -34,7 +35,7 @@ public class ProductTests
         catch (Exception e)
         {
             //Assert
-            Assert.Equal(typeof(ArgumentNullException), e.GetType());
+            e.Should().BeOfType<ArgumentNullException>();
         }             
     }
 
@@ -49,7 +50,7 @@ public class ProductTests
         product.ChangeTitle(title);
 
         //Arrage
-        Assert.Equal(title, product.Title);
+        product.Title.Should().BeEquivalentTo(title);
     }
 
     [Theory]
@@ -68,7 +69,7 @@ public class ProductTests
         catch (Exception e)
         {
             //Assert
-            Assert.Equal(typeof(ArgumentNullException), e.GetType());
+            e.Should().BeOfType<ArgumentNullException>();
         }
     }
 
@@ -80,10 +81,10 @@ public class ProductTests
         var product = ProductFactory.Create(ProductFactory.TestCustomer, 1000);
 
         //Act
-        product.ChangeTitle(description);
+        product.ChangeDescription(description);
 
         //Assert
-        Assert.Equal(description, product.Title);
+        product.Description.Should().BeEquivalentTo(description);
     }
 
     [Theory]
@@ -95,7 +96,7 @@ public class ProductTests
         var product = ProductFactory.Create(ProductFactory.TestCustomer, amount);
 
         //Assert
-        Assert.NotNull(product);
+        product.Price.Should().NotBeNull();
     }
 
     [Theory]
@@ -109,8 +110,8 @@ public class ProductTests
         }
         catch (Exception e)
         {
-            //Assert
-            Assert.Equal(typeof(ArgumentOutOfRangeException), e.GetType());
+            //Assert\
+            e.Should().BeOfType<ArgumentOutOfRangeException>();
         }
     }
 
@@ -129,7 +130,7 @@ public class ProductTests
         catch (Exception e)
         {
             //Assert
-            Assert.Equal(typeof (ArgumentOutOfRangeException), e.GetType());
+            e.Should().BeOfType<ArgumentOutOfRangeException>();
         }
     }
 }

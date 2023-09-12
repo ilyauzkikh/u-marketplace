@@ -6,11 +6,11 @@ namespace Products.UnitTests.Products.Domain.Tests;
 
 public static class ProductFactory
 {
-    public static Customer TestCustomer => new Customer("Ilya", "Uzkikh", "+48111222333", "test@mail.com");
-    public static Currency TestCurrency => new Currency(CurrencyType.USD, new ExchangeRate[]
-    {
-        new ExchangeRate(CurrencyType.USD, CurrencyType.PLN, 4, 1 / 4)
-    });
+    public static Customer TestCustomer { get; } = new Customer("Ilya", "Uzkikh", "+48111222333", "test@mail.com");
+    public static Currency TestCurrency { get; } = new Currency(CurrencyType.USD, new ExchangeRate[]
+        {
+            new ExchangeRate(CurrencyType.USD, CurrencyType.PLN, 4, 1 / 4)
+        });
 
     public static Product Create(Customer owner, decimal priceAmount)
     {
