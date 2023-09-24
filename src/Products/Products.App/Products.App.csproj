@@ -9,6 +9,7 @@
   </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="MediatR" Version="12.1.1" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.10" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.10" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.10">
@@ -25,6 +26,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Products.Infrastructure.IoC\Products.Infrastructure.IoC.csproj" />
       <ProjectReference Include="..\Products.Infrastructure\Products.Infrastructure.csproj" />
       <ProjectReference Include="..\Products.Presentation\Products.Presentation.csproj" />
     </ItemGroup>

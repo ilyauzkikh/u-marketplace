@@ -1,6 +1,8 @@
 ﻿namespace Products.Domain.BaseEntities;
 
-internal interface IUnitOfWork : IDisposable
+public interface IUnitOfWork : IDisposable
 {
-    
+    Task BeginTransaction();
+    Task CommitAsync();
+    Task RollbackAsync();
 }

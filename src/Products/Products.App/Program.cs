@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Products.Infrastructure.Context;
+using Products.Infrastructure.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,8 @@ var testConnectionString = builder.Configuration["Products:ConnectionString"];
 var infrustructureAssembly = typeof(Products.Infrastructure.AssemblyReference).Assembly;
 builder.Services.AddDbContext<ProductsContext>(x => x.UseSqlServer(testConnectionString,
     opts => opts.MigrationsAssembly(infrustructureAssembly.FullName)));
+
+DependencyContainer.RegisterServices(builder.Services);
 
 var app = builder.Build();
 

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Products.Domain.Products;
 
-namespace Products.Domain.Products;
-
-internal interface IProductsRepository
+public interface IProductsRepository
 {
-
+    Task<Guid> AddProductAsync(Product product);
+    Task<Product?> GetProductByIdAsync(Guid productId);
 }
