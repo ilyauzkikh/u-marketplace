@@ -1,15 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Products.Domain.ProductAggregate;
+using Products.Domain.Products;
 
 namespace Products.Infrastructure.Configurations;
 
-internal class ProductEntityTypeConfiguration : IEntityTypeConfiguration<Product>
+internal class ProductEntityTypeConfiguration : BaseEntityTypeConfiguration<Product>
 {
-    public void Configure(EntityTypeBuilder<Product> builder)
+    public override void Configure(EntityTypeBuilder<Product> builder)
     {
-        builder.Property(x => x.Id).HasDefaultValueSql("NEWID()");
-
         builder.Property(x => x.Title)
             .HasColumnName("title")
             .IsRequired()
@@ -19,5 +17,7 @@ internal class ProductEntityTypeConfiguration : IEntityTypeConfiguration<Product
             .HasColumnName("description")
             .IsRequired()
             .HasMaxLength(250);
+
+        base.Configure(builder);
     }
 }

@@ -1,16 +1,13 @@
-﻿using Products.Domain.CustomerAggregate;
-using Products.Domain.PriceAggregate;
-using Products.Domain.ProductAggregate;
+﻿using Products.Domain.Customers;
+using Products.Domain.Pricing;
+using Products.Domain.Products;
 
 namespace Products.UnitTests.Products.Domain.Tests;
 
 public static class ProductFactory
 {
     public static Customer TestCustomer { get; } = new Customer("Ilya", "Uzkikh", "+48111222333", "test@mail.com");
-    public static Currency TestCurrency { get; } = new Currency(CurrencyType.USD, new ExchangeRate[]
-        {
-            new ExchangeRate(CurrencyType.USD, CurrencyType.PLN, 4, 1 / 4)
-        });
+    public static Currency TestCurrency { get; } = new Currency(CurrencyType.USD);
 
     public static Product Create(Customer owner, decimal priceAmount)
     {

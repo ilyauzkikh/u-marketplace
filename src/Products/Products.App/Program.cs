@@ -6,7 +6,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 var presentationAssembly = typeof(Products.Presentation.AssemblyReference).Assembly;
-
 builder.Services
     .AddControllers()
     .AddApplicationPart(presentationAssembly);
@@ -16,7 +15,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var testConnectionString = builder.Configuration["Products:ConnectionString"];
-builder.Services.AddDbContext<ProductsContext>(x => x.UseNpgsql(testConnectionString));
+var infrustructureAssembly = typeof(Products.Infrastructure.AssemblyReference).Assembly;
+builder.Services.AddDbContext<ProductsContext>(x => x.UseSqlServer(testConnectionString,
+    opts => opts.MigrationsAssembly(infrustructureAssembly.FullName)));
 
 var app = builder.Build();
 

@@ -1,15 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Products.Domain.CustomerAggregate;
+using Products.Domain.Customers;
 
 namespace Products.Infrastructure.Configurations;
 
-internal class CustomerEntityTypeConfiguration : IEntityTypeConfiguration<Customer>
+internal class CustomerEntityTypeConfiguration : BaseEntityTypeConfiguration<Customer>
 {
-    public void Configure(EntityTypeBuilder<Customer> builder)
+    public override void Configure(EntityTypeBuilder<Customer> builder)
     {
-        builder.Property(x => x.Id).HasDefaultValueSql("NEWID()");
-
         builder.Property(x => x.FirstName)
             .IsRequired()
             .HasMaxLength(50);
@@ -25,5 +23,7 @@ internal class CustomerEntityTypeConfiguration : IEntityTypeConfiguration<Custom
         builder.Property(x => x.Email)
             .IsRequired()
             .HasMaxLength(100);
+
+        base.Configure(builder);
     }
 }

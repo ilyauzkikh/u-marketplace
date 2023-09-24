@@ -1,6 +1,6 @@
-﻿using Products.Domain.Entities;
+﻿using Products.Domain.BaseEntities;
 
-namespace Products.Domain.ProductAggregate;
+namespace Products.Domain.Products;
 
 public class Category : Entity
 {

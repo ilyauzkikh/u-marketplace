@@ -1,5 +1,5 @@
-﻿using Products.Domain.CustomerAggregate;
-using Products.Domain.PriceAggregate;
+﻿using Products.Domain.Customers;
+using Products.Domain.Pricing;
 using FluentAssertions;
 
 namespace Products.UnitTests.Products.Domain.Tests;

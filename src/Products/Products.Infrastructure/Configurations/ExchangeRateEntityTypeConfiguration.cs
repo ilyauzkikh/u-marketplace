@@ -1,15 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Products.Domain.PriceAggregate;
+using Products.Domain.Pricing;
 
 namespace Products.Infrastructure.Configurations;
 
-internal class ExchangeRateEntityTypeConfiguration : IEntityTypeConfiguration<ExchangeRate>
+internal class ExchangeRateEntityTypeConfiguration : BaseEntityTypeConfiguration<ExchangeRate>
 {
-    public void Configure(EntityTypeBuilder<ExchangeRate> builder)
+    public override void Configure(EntityTypeBuilder<ExchangeRate> builder)
     {
-        builder.Property(x => x.Id).HasDefaultValueSql("NEWID()");
-
         builder.Property(x => x.First)
             .HasColumnName("first_currency")
             .IsRequired();

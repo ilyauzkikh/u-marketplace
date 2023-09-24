@@ -1,4 +1,4 @@
-﻿namespace Products.Domain.Entities;
+﻿namespace Products.Domain.BaseEntities;
 
 public abstract class ValueObject
 {

@@ -1,8 +1,8 @@
-﻿using Products.Domain.CustomerAggregate;
-using Products.Domain.Entities;
-using Products.Domain.PriceAggregate;
+﻿using Products.Domain.Customers;
+using Products.Domain.BaseEntities;
+using Products.Domain.Pricing;
 
-namespace Products.Domain.ProductAggregate;
+namespace Products.Domain.Products;
 
 public class Product : Entity, IAggregateRoot
 {

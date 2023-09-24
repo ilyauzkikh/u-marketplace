@@ -1,6 +1,6 @@
-﻿using Products.Domain.Entities;
+﻿using Products.Domain.BaseEntities;
 
-namespace Products.Domain.PriceAggregate;
+namespace Products.Domain.Pricing;
 
 public class ExchangeRate : Entity
 {
@@ -13,8 +13,6 @@ public class ExchangeRate : Entity
         Second = second;
         FirstToSecond = firstToSecondRate;
         SecondToFirst = secondToFirstRate;
-
-        Currencies = new HashSet<Currency>();
     }
 
     protected ExchangeRate() { }
@@ -23,6 +21,4 @@ public class ExchangeRate : Entity
     public CurrencyType Second { get; private set; }
     public decimal FirstToSecond { get; private set; }
     public decimal SecondToFirst { get; private set; }
-
-    public virtual IEnumerable<Currency> Currencies { get; set; }
 }

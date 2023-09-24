@@ -1,6 +1,6 @@
-﻿using Products.Domain.Entities;
+﻿using Products.Domain.BaseEntities;
 
-namespace Products.Domain.CustomerAggregate;
+namespace Products.Domain.Customers;
 
 public class Customer : Entity
 {

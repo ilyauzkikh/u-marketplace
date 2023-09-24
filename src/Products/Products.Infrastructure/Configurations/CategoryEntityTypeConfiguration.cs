@@ -1,20 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Products.Domain.ProductAggregate;
+using Products.Domain.Products;
 using Products.Infrastructure.Context;
 
 namespace Products.Infrastructure.Configurations;
 
-internal class CategoryEntityTypeConfiguration : IEntityTypeConfiguration<Category>
+internal class CategoryEntityTypeConfiguration : BaseEntityTypeConfiguration<Category>
 {
-    public void Configure(EntityTypeBuilder<Category> builder)
+    public override void Configure(EntityTypeBuilder<Category> builder)
     {
         builder.ToTable("categories", ProductsContext.DEFAULT_SCHEMA);
-
-        builder.Property(x => x.Id).HasDefaultValueSql("NEWID()");
-
-        builder.Property(x => x.Id)
-            .HasColumnName("id");
 
         builder.Property(x => x.Title)
             .HasColumnName("title")
@@ -23,5 +18,9 @@ internal class CategoryEntityTypeConfiguration : IEntityTypeConfiguration<Catego
         builder.Property(x => x.Description)
             .HasColumnName("description")
             .IsRequired(true);
+
+        builder.HasOne(x => x.Parent);
+
+        base.Configure(builder);
     }
 }

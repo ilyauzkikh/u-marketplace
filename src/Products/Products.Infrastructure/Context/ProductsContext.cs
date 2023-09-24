@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Products.Domain.CustomerAggregate;
-using Products.Domain.PriceAggregate;
-using Products.Domain.ProductAggregate;
+using Microsoft.Extensions.Configuration;
+using Products.Domain.Customers;
+using Products.Domain.Pricing;
+using Products.Domain.Products;
 using Products.Infrastructure.Configurations;
 
 namespace Products.Infrastructure.Context;
@@ -28,16 +29,7 @@ public class ProductsContext : DbContext
         modelBuilder.ApplyConfiguration(new CustomerEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new ExchangeRateEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new PriceEntityTypeConfiguration());      
-    }
-}
 
-public class ProductsContextDesignFactory : IDesignTimeDbContextFactory<ProductsContext>
-{
-    public ProductsContext CreateDbContext(string[] args)
-    {
-        var optionsBuilder = new DbContextOptionsBuilder<ProductsContext>()
-            .UseNpgsql(args[0]);
-
-        return new ProductsContext(optionsBuilder.Options);
+        base.OnModelCreating(modelBuilder);
     }
 }

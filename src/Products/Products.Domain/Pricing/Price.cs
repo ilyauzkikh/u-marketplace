@@ -1,6 +1,6 @@
-﻿using Products.Domain.Entities;
+﻿using Products.Domain.BaseEntities;
 
-namespace Products.Domain.PriceAggregate;
+namespace Products.Domain.Pricing;
 
 public class Price : Entity
 {
@@ -22,16 +22,5 @@ public class Price : Entity
     {
         if (newAmount < 0) throw new ArgumentOutOfRangeException(nameof (newAmount));
         Amount = newAmount;
-    }
-
-    public Price ConvertTo(Currency toCurrency)
-    {
-        var amount = Amount * BaseCurrency.ExchangeRates
-            .FirstOrDefault(x => x.First == BaseCurrency.Type && x.Second == toCurrency.Type)!
-            .FirstToSecond;
-
-        return new Price(
-            new Currency(toCurrency.Type, BaseCurrency.ExchangeRates),
-            amount);
     }
 }

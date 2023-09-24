@@ -1,4 +1,4 @@
-﻿namespace Products.Domain.Entities;
+﻿namespace Products.Domain.BaseEntities;
 
 public abstract class Entity
 {
@@ -7,5 +7,5 @@ public abstract class Entity
         Id = Guid.NewGuid();
     }
 
-    public Guid Id { get; set; }
+    public Guid Id { get; protected set; }
 }
